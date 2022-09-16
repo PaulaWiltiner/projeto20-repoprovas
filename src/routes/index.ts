@@ -1,6 +1,6 @@
 import { Router } from "express";
 import authRouter from "./authRouter";
-import cardsRouter from "./cardsRouter";
+// import cardsRouter from "./testsRouter";
 import credentialsRouter from "./credentialsRouter";
 import securityNotesRouter from "./securityNotesRoutes";
 import WifisRouter from "./wifisRouter";
@@ -10,6 +10,6 @@ router.use(authRouter);
 router.use(credentialsRouter);
 router.use(securityNotesRouter);
 router.use(WifisRouter);
-router.use(cardsRouter);
+// router.use(cardsRouter);
 
 export default router;
