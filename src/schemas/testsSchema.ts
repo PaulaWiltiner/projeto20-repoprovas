@@ -6,5 +6,5 @@ export const testsSchema = Joi.object({
     scheme: ["https"],
   }),
   categoryId: Joi.number(),
-  teacherDisciplineId: Joi.number()
+  teachersDisciplineId: Joi.number()
 });
