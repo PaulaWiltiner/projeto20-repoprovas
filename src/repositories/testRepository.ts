@@ -11,16 +11,11 @@ export async function insertTest(dataList:TTests){
   return result;
 }
 
-// export async function findByTitleandUserId(title:string,userId:number){
-//   const result = await client.tests.findMany({
-//    where:{
-//     userId,
-//     title
-//    }
-//   })
+export async function findTests(){
+  const result = await client.tests.findMany()
   
-//   return result;
-// }
+  return result;
+}
 
 // export async function findById(id:number){
 //   const result = await client.tests.findUnique({

@@ -1,4 +1,4 @@
-import {  insertTest } from "../repositories/testRepository";
+import {  findTests, insertTest } from "../repositories/testRepository";
 import { authenticateToken } from "../utils/authVerification";
 import { TTests } from "../types/TestsTypes";
 import { findCategory } from "./categoryService";
@@ -8,7 +8,7 @@ export async function createTest(data:TTests, token:string){
   await authenticateToken(token);
 
   const category = await findCategory(data.categoryId)
-  console.log(data.teachersDisciplineId)
+
   const teacherDiscipline = await findTeacherDiscipline(data.teachersDisciplineId)
   if(!category){
     throw {code:'NotFound' , message:'Category not found'}
@@ -21,3 +21,13 @@ export async function createTest(data:TTests, token:string){
   await insertTest(dataList)
  
  }
+
+ export async function getTests(token:string){
+  await authenticateToken(token);
+
+  const result= await findTests()
+
+  return result
+ 
+ }
+
