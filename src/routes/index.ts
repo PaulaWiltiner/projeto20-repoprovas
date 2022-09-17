@@ -1,9 +1,9 @@
 import { Router } from "express";
 import authRouter from "./authRouter";
-// import cardsRouter from "./testsRouter";
+import testsRouter from "./testsRouter";
 
 const router = Router();
 router.use(authRouter);
-// router.use(cardsRouter);
+router.use(testsRouter);
 
 export default router;
