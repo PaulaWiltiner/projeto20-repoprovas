@@ -9,3 +9,5 @@ export async function findTeacherDiscipline(id:number){
   return result
  
  }
+
+ 

@@ -1,4 +1,4 @@
-import {  findTests, insertTest } from "../repositories/testRepository";
+import {   findTestsDiscipline, findTestsTeacher, insertTest } from "../repositories/testRepository";
 import { authenticateToken } from "../utils/authVerification";
 import { TTests } from "../types/TestsTypes";
 import { findCategory } from "./categoryService";
@@ -22,10 +22,19 @@ export async function createTest(data:TTests, token:string){
  
  }
 
- export async function getTests(token:string){
+ export async function getTestsDiscipline(token:string){
   await authenticateToken(token);
 
-  const result= await findTests()
+  const result= await findTestsDiscipline()
+
+  return result
+ 
+ }
+
+ export async function getTestsTeacher(token:string){
+  await authenticateToken(token);
+
+  const result= await findTestsTeacher()
 
   return result
  

@@ -1,5 +1,6 @@
 
 import  client  from "../config/prisma";
+import { connection } from "../config/postgres";
 import { TTests } from "../types/TestsTypes";
 
 
@@ -11,47 +12,37 @@ export async function insertTest(dataList:TTests){
   return result;
 }
 
-export async function findTests(){
-  const result = await client.tests.findMany()
-  
-  return result;
+export async function findTestsDiscipline(){
+  const result = await connection.query(
+    `
+    SELECT terms.id, terms.number , json_agg(json_build_object( 'disciplineId',disciplines.id,'disciplineName' ,disciplines.name ,'categoryList' ,
+                                   (SELECT json_agg(json_build_object('categoryId',categories.id, 'categoryName',
+                                  categories.name, 'testList',json_build_array(json_build_object('testId',tests.id,
+                                  'testName',tests.name, 'testPdfUrl', tests."pdfUrl", 'teacherName', (SELECT name FROM teachers WHERE teachers.id="teachersDisciplines"."teacherId"))))) 
+    FROM categories
+    JOIN tests ON categories.id=tests."categoryId"
+    JOIN "teachersDisciplines" ON "teachersDisciplines".id=tests."teachersDisciplineId"
+    WHERE "disciplineId"=disciplines.id
+    GROUP BY "disciplineId"))) FROM disciplines
+    JOIN terms ON disciplines."termId"= terms.id
+    GROUP BY terms.id, terms.number
+`
+  );
+
+  return result.rows[0];
 }
 
-// export async function findById(id:number){
-//   const result = await client.tests.findUnique({
-//    where:{
-//     id
-//    }
-//   })
-  
-//   return result;
-// }
+export async function findTestsTeacher(){
+  const result = await connection.query(
+    `
+    SELECT  "teachersDisciplines"."teacherId", (SELECT name FROM teachers WHERE teachers.id="teachersDisciplines"."teacherId") AS "teacherName" ,json_agg(json_build_object('testId',tests.id,
+															'testName',tests.name, 'testPdfUrl', tests."pdfUrl", 'disciplineName',(SELECT name FROM disciplines WHERE disciplines.id="teachersDisciplines"."disciplineId"))) AS "testList" 
+    FROM categories
+    JOIN tests ON categories.id=tests."categoryId"
+    JOIN "teachersDisciplines" ON "teachersDisciplines".id=tests."teachersDisciplineId"
+    GROUP BY "teachersDisciplines"."teacherId"
+`
+  );
 
-// export async function find(userId:number){
-//   const result = await client.tests.findMany({
-//    where:{
-//     userId
-//    }
-//   })
-  
-//   return result;
-// }
-
-// export async function deleteById(id:number){
-//   await client.tests.delete({
-//    where:{
-//     id
-//    }
-//   })
-  
-// }
-
-// export async function findType(id:number){
-//   const result = await client.cardType.findUnique({
-//    where:{
-//     id
-//    }
-//   })
-  
-//   return result;
-// }
+  return result.rows[0];
+}
