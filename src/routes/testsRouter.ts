@@ -5,8 +5,8 @@ import { testsSchema } from "../schemas/testsSchema";
 const testsRouter = Router();
 
 testsRouter.post("/tests",validateSchema(testsSchema), createTest);
-testsRouter.get("/tests", getTestsDiscipline);
-testsRouter.get("/tests", getTestsTeacher);
+testsRouter.get("/tests/discipline", getTestsDiscipline);
+testsRouter.get("/tests/teacher", getTestsTeacher);
 
 export default testsRouter;
 
