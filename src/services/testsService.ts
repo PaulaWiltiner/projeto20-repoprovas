@@ -1,30 +1,25 @@
-// import { findByTitleandUserId, insertCards, findById, find, deleteById, findType } from "../repositories/testRepository";
-// import { authenticateToken } from "../utils/authVerification";
-// import Cryptr from "cryptr";
-// import { TCards } from "../types/TestsTypes";
+import {  insertTest } from "../repositories/testRepository";
+import { authenticateToken } from "../utils/authVerification";
+import { TTests } from "../types/TestsTypes";
+import { findCategory } from "./categoryService";
+import { findTeacherDiscipline } from "./teacherService";
 
-// export async function createCards(data:TCards, token:string){
-//   const userId=await authenticateToken(token);
-//   const findOne=await findByTitleandUserId(data.title,userId);
-//   const findTyp = await findType(data.type)
-//   if (!findTyp) {
-//     throw {code:'NotFound' , message:'type not existis'}
-//   }
-//   if (findOne.length!==0) {
-//     throw {code:'Conflict' , message:'title already existis'}
-//   }
+export async function createTest(data:TTests, token:string){
+  await authenticateToken(token);
 
-//   const cryptr = new Cryptr('cardTotallySecretKey');
-//   const password= cryptr.encrypt(data.password);
-//   const cvc= cryptr.encrypt(data.cvc);
-//   data["password"]=password;
-//   data["cvc"]=cvc;
-//   data.userId=userId;
+  const category = await findCategory(data.categoryId)
+  const teacherDiscipline = await findTeacherDiscipline(data.teachersDisciplineId)
+  if(!category){
+    throw {code:'NotFound' , message:'Category not found'}
+  }
+  if(!teacherDiscipline){
+    throw {code:'NotFound' , message:'id teacherDiscipline not found'}
+  }
 
-//   const dataList=data
-//   await insertCards(dataList)
+  const dataList=data
+  await insertTest(dataList)
  
-//  }
+ }
 
 //  export async function getCardId(id:number,token:string){
 //   const userId=await authenticateToken(token);
