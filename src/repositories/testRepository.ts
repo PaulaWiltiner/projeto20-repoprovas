@@ -29,7 +29,7 @@ export async function findTestsDiscipline(){
 `
   );
 
-  return result.rows[0];
+  return result.rows;
 }
 
 export async function findTestsTeacher(){
@@ -44,5 +44,5 @@ export async function findTestsTeacher(){
 `
   );
 
-  return result.rows[0];
+  return result.rows;
 }
