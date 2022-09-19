@@ -17,9 +17,9 @@
 
 export  async function signUpFactory() {
   return {
-    email:  'ola@email.com',
-    password: 'ola',
-    samePassword:  'ola'
+    email:  'fulano2@email.com',
+    password: 'fulano2',
+    samePassword:  'fulano2'
   }
 }
 
