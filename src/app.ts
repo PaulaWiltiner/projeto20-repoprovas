@@ -1,4 +1,3 @@
-
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { json } from "express";
@@ -14,9 +13,4 @@ app.use(json());
 app.use(router);
 app.use(errorHandler);
 
-
-const PORT: number = Number(process.env.PORT) || 4003
-
-app.listen(PORT, () => {
-  console.log("server running ", PORT);
-});
+export default app
